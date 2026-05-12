@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema(
+const specialOfferSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -11,6 +11,11 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'Price is required'],
       min: [0, 'Price cannot be negative'],
+    },
+    originalPrice: {
+      type: Number,
+      required: [true, 'Original Price is required'],
+      min: [0, 'Original Price cannot be negative'],
     },
     description: {
       type: String,
@@ -27,13 +32,24 @@ const productSchema = new mongoose.Schema(
         default: '',
       },
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+    stock: {
+      type: Number,
+      default: 50,
     },
+    rating: {
+      type: Number,
+      default: 5,
+    },
+    badge: {
+      type: String,
+      default: 'Special',
+    },
+    unit: {
+      type: String,
+      default: '1 Unit',
+    }
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('SpecialOffer', specialOfferSchema, 'special_offers');
