@@ -7,27 +7,25 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-12 mb-8">
-      <Button
-        variant="outline"
-        size="sm"
+    <div className="flex items-center justify-center gap-4 mt-12 mb-8">
+      <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
-        className="w-10 h-10 p-0 rounded-full flex items-center justify-center"
+        className="w-12 h-12 p-0 rounded-2xl flex items-center justify-center bg-white/5 border border-white/5 text-slate-500 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
       >
-        <ChevronLeft size={16} />
-      </Button>
+        <span className="material-symbols-outlined">chevron_left</span>
+      </button>
 
-      <div className="flex gap-1.5 items-center">
+      <div className="flex gap-2 items-center">
         {pages.map((page) => (
           <button
             key={page}
             onClick={() => onPageChange(page)}
             className={`
-              w-10 h-10 rounded-full text-sm font-bold transition-all duration-200
+              w-12 h-12 rounded-2xl text-sm font-black transition-all duration-300
               ${currentPage === page 
-                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-200 scale-110' 
-                : 'bg-white/60 text-slate-600 hover:bg-white hover:text-indigo-600 border border-slate-200 hover:border-indigo-200'}
+                ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xl shadow-indigo-500/20 scale-110 border border-white/10' 
+                : 'bg-white/5 text-slate-500 hover:text-white hover:bg-white/10 border border-white/5'}
             `}
           >
             {page}
@@ -35,15 +33,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         ))}
       </div>
 
-      <Button
-        variant="outline"
-        size="sm"
+      <button
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
-        className="w-10 h-10 p-0 rounded-full flex items-center justify-center"
+        className="w-12 h-12 p-0 rounded-2xl flex items-center justify-center bg-white/5 border border-white/5 text-slate-500 hover:text-white hover:bg-white/10 transition-all disabled:opacity-20 disabled:cursor-not-allowed"
       >
-        <ChevronRight size={16} />
-      </Button>
+        <span className="material-symbols-outlined">chevron_right</span>
+      </button>
     </div>
   );
 };

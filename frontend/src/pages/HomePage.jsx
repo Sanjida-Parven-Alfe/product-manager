@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import useProducts from "../hooks/useProducts";
-import ProductList from "../components/ProductList";
-import ProductForm from "../components/ProductForm";
-import SearchBar from "../components/SearchBar";
-import Pagination from "../components/Pagination";
+import { Link, useNavigate, Navigate } from "react-router-dom";
+import Footer from "../components/Footer";
+import Spinner from "../components/Spinner";
+
 import {
   Plus,
   Package,
@@ -20,8 +18,10 @@ import {
 import Button from "../components/ui/Button";
 import SpecialOffers from "../components/SpecialOffers";
 import logo from "../assets/logo.png";
+import logoJpg from "../assets/logo.jpg";
 
 const LandingPage = () => {
+
   const navigate = useNavigate();
   return (
     <div className="w-full overflow-x-hidden">
@@ -295,131 +295,23 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="w-full py-10 px-6 border-t border-slate-200 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center">
-            <img src={logo} alt="Shelve Logo" className="h-8 object-contain" />
-          </div>
-          <p className="text-slate-500 text-sm">
-            © 2026 Shelve Inc. Built for high-growth teams.
-          </p>
-          <div className="flex gap-8">
-            <span className="text-slate-500 text-sm font-medium cursor-pointer hover:text-indigo-600 transition-colors">
-              Privacy
-            </span>
-            <span className="text-slate-500 text-sm font-medium cursor-pointer hover:text-indigo-600 transition-colors">
-              Terms
-            </span>
-            <span className="text-slate-500 text-sm font-medium cursor-pointer hover:text-indigo-600 transition-colors">
-              Contact
-            </span>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-const Dashboard = () => {
-  const {
-    products,
-    loading,
-    formLoading,
-    pagination,
-    search,
-    setSearch,
-    createProduct,
-    updateProduct,
-    deleteProduct,
-    handlePageChange,
-  } = useProducts();
-
-  const [showForm, setShowForm] = useState(false);
-  const [editProduct, setEditProduct] = useState(null);
-
-  const handleEdit = (product) => {
-    setEditProduct(product);
-    setShowForm(true);
-  };
-
-  const handleClose = () => {
-    setShowForm(false);
-    setEditProduct(null);
-  };
-
-  const handleSubmit = async (formData) => {
-    const success = editProduct
-      ? await updateProduct(editProduct._id, formData)
-      : await createProduct(formData);
-    if (success) handleClose();
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
-      await deleteProduct(id);
-    }
-  };
-
-  return (
-    <div className="min-h-screen pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10 bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-          <div>
-            <h1 className="text-slate-900 text-3xl font-black tracking-tight mb-2">
-              My Products
-            </h1>
-            <p className="text-slate-500 text-sm font-medium flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              Showing {pagination.total} product
-              {pagination.total !== 1 ? "s" : ""}
-            </p>
-          </div>
-          <Button onClick={() => setShowForm(true)} icon={Plus} size="lg">
-            Add New Product
-          </Button>
-        </div>
-
-        {/* Filters & Search */}
-        <div className="mb-8 bg-white p-2 rounded-2xl shadow-sm border border-slate-100 inline-block w-full md:w-auto">
-          <SearchBar
-            value={search}
-            onChange={setSearch}
-            onClear={() => setSearch("")}
-          />
-        </div>
-
-        {/* Grid */}
-        <ProductList
-          products={products}
-          loading={loading}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-
-        {/* Pagination */}
-        <Pagination
-          currentPage={pagination.page}
-          totalPages={pagination.pages}
-          onPageChange={handlePageChange}
-        />
-      </div>
-
-      {showForm && (
-        <ProductForm
-          onSubmit={handleSubmit}
-          onClose={handleClose}
-          initialData={editProduct}
-          loading={formLoading}
-        />
-      )}
+      <Footer />
     </div>
   );
 };
 
 const HomePage = () => {
-  const { user } = useAuth();
-  return user ? <Dashboard /> : <LandingPage />;
+  const { loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
+  return <LandingPage />;
 };
 
 export default HomePage;

@@ -1,10 +1,14 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import ProductsPage from './pages/ProductsPage';
+import FeaturesPage from './pages/FeaturesPage';
+import AboutPage from './pages/AboutPage';
 import Spinner from './components/Spinner';
 
 const ProtectedRoute = ({ children }) => {
@@ -28,15 +32,32 @@ const GuestRoute = ({ children }) => {
       </div>
     );
   }
-  return !user ? children : <Navigate to="/" />;
+  return !user ? children : <Navigate to="/dashboard" />;
 };
 
 const AppRoutes = () => {
+  const location = useLocation();
+  const { user } = useAuth();
+  
+  const hideNavbarPaths = ['/login', '/register', '/dashboard'];
+  const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
+
   return (
     <>
-      <Navbar />
+      {!shouldHideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route
           path="/login"
           element={

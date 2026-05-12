@@ -12,12 +12,13 @@ const useProducts = () => {
     total: 0,
   });
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('default');
 
-  const fetchProducts = useCallback(async (page = 1, searchQuery = '') => {
+  const fetchProducts = useCallback(async (page = 1, searchQuery = '', sortQuery = 'default') => {
     setLoading(true);
     try {
       const { data } = await api.get('/products', {
-        params: { page, limit: 9, search: searchQuery },
+        params: { page, limit: 8, search: searchQuery, sort: sortQuery },
       });
       setProducts(data.data);
       setPagination(data.pagination);
@@ -30,10 +31,10 @@ const useProducts = () => {
 
   useEffect(() => {
     const delay = setTimeout(() => {
-      fetchProducts(1, search);
+      fetchProducts(1, search, sort);
     }, 400);
     return () => clearTimeout(delay);
-  }, [search, fetchProducts]);
+  }, [search, sort, fetchProducts]);
 
   const createProduct = async (formData) => {
     const toastId = showLoading('Adding product...');
@@ -44,7 +45,7 @@ const useProducts = () => {
       });
       dismissToast(toastId);
       showSuccess('Product added!');
-      fetchProducts(1, search);
+      fetchProducts(1, search, sort);
       return true;
     } catch (error) {
       dismissToast(toastId);
@@ -64,7 +65,7 @@ const useProducts = () => {
       });
       dismissToast(toastId);
       showSuccess('Product updated!');
-      fetchProducts(pagination.page, search);
+      fetchProducts(pagination.page, search, sort);
       return true;
     } catch (error) {
       dismissToast(toastId);
@@ -81,7 +82,7 @@ const useProducts = () => {
       await api.delete(`/products/${id}`);
       dismissToast(toastId);
       showSuccess('Product deleted!');
-      fetchProducts(pagination.page, search);
+      fetchProducts(pagination.page, search, sort);
     } catch (error) {
       dismissToast(toastId);
       showError(error.response?.data?.message || 'Failed to delete product');
@@ -89,7 +90,7 @@ const useProducts = () => {
   };
 
   const handlePageChange = (page) => {
-    fetchProducts(page, search);
+    fetchProducts(page, search, sort);
   };
 
   return {
@@ -99,6 +100,8 @@ const useProducts = () => {
     pagination,
     search,
     setSearch,
+    sort,
+    setSort,
     createProduct,
     updateProduct,
     deleteProduct,

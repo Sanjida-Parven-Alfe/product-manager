@@ -51,22 +51,20 @@ const Navbar = () => {
           <div className="hidden sm:flex items-center gap-4">
             {user ? (
               <>
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100/50 border border-slate-200">
-                  <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold uppercase">
-                    {user.name.charAt(0)}
-                  </div>
-                  <span className="text-slate-600 text-sm font-medium pr-1">
-                    {user.name}
-                  </span>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  icon={LogOut}
-                  onClick={handleLogout}
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold uppercase border-2 border-white shadow-[0_0_15px_rgba(79,70,229,0.4)] hover:shadow-[0_0_20px_rgba(79,70,229,0.6)] hover:scale-105 transition-all cursor-pointer"
+                  title="Go to Dashboard"
                 >
-                  Logout
-                </Button>
+                  {user.name.charAt(0)}
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="p-2.5 rounded-full bg-red-600 text-white hover:bg-red-700 border-2 border-white shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_20px_rgba(220,38,38,0.6)] transition-all cursor-pointer"
+                  title="Logout"
+                >
+                  <LogOut size={20} strokeWidth={2.5} />
+                </button>
               </>
             ) : (
               <>
@@ -110,20 +108,27 @@ const Navbar = () => {
           </div>
           {user ? (
             <>
-              <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
-                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold uppercase">
-                  {user.name.charAt(0)}
+              <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-slate-50 border border-slate-100">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => {
+                      setMenuOpen(false);
+                      navigate("/dashboard");
+                    }}
+                    className="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center text-lg font-bold uppercase shadow-[0_0_15px_rgba(79,70,229,0.3)] cursor-pointer"
+                  >
+                    {user.name.charAt(0)}
+                  </button>
+                  <span className="text-slate-700 font-semibold">{user.name}</span>
                 </div>
-                <span className="text-slate-700 font-medium">{user.name}</span>
+                <button
+                  onClick={handleLogout}
+                  className="p-3 rounded-full bg-red-600 text-white hover:bg-red-700 shadow-[0_0_15px_rgba(220,38,38,0.3)] cursor-pointer"
+                  title="Logout"
+                >
+                  <LogOut size={20} strokeWidth={2.5} />
+                </button>
               </div>
-              <Button
-                variant="outline"
-                icon={LogOut}
-                onClick={handleLogout}
-                className="w-full justify-start"
-              >
-                Logout
-              </Button>
             </>
           ) : (
             <>

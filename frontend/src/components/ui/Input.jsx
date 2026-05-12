@@ -10,7 +10,7 @@ const Input = React.forwardRef(({
   return (
     <div className="w-full">
       {label && (
-        <label className="block text-slate-700 text-xs font-bold tracking-wider uppercase mb-2">
+        <label className="block text-slate-500 text-[10px] font-black tracking-[0.15em] uppercase mb-2 ml-1">
           {label}
         </label>
       )}
@@ -18,18 +18,18 @@ const Input = React.forwardRef(({
         {Icon && (
           <Icon 
             size={16} 
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" 
+            className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-600" 
           />
         )}
         <input
           ref={ref}
           className={`
-            w-full bg-white/60 border border-slate-200 rounded-xl 
-            ${Icon ? 'pl-11 pr-4' : 'px-4'} py-3 
-            text-slate-800 placeholder-slate-400 text-sm 
-            focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 
-            transition-all duration-200 backdrop-blur-sm
-            ${error ? 'border-red-300 focus:border-red-500 focus:ring-red-500/10' : ''}
+            w-full bg-[#0f0d13] border border-white/5 rounded-2xl 
+            ${Icon ? 'pl-12 pr-5' : 'px-5'} py-3.5 
+            text-white placeholder:text-slate-700 text-sm 
+            focus:outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/5 
+            transition-all duration-200
+            ${error ? 'border-red-500/50 focus:border-red-500' : ''}
             ${className}
           `}
           {...props}
