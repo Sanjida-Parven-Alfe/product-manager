@@ -11,6 +11,8 @@ const specialOfferRoutes = require('./routes/specialOfferRoutes');
 dotenv.config();
 connectDB();
 
+console.log('JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO');
+
 const app = express();
 
 app.use(cors());

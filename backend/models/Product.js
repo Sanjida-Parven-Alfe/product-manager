@@ -32,8 +32,25 @@ const productSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    originalPrice: {
+      type: Number,
+      default: 0
+    },
+    discount: {
+      type: Number,
+      default: 0
+    }
   },
   { timestamps: true }
 );
+
+productSchema.pre('save', function(next) {
+  if (this.originalPrice > 0 && this.price < this.originalPrice) {
+    this.discount = Math.round(((this.originalPrice - this.price) / this.originalPrice) * 100);
+  } else {
+    this.discount = 0;
+  }
+  next();
+});
 
 module.exports = mongoose.model('Product', productSchema);

@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
 const ApiError = require('../utils/ApiError');
 
-const protect = asyncHandler(async (req, res, next) => {
+const protect = async (req, res, next) => {
   let token;
 
   if (
@@ -16,13 +15,13 @@ const protect = asyncHandler(async (req, res, next) => {
       req.user = await User.findById(decoded.id).select('-password');
       next();
     } catch (error) {
-      throw new ApiError(401, 'Not authorized, token failed');
+      next(new ApiError(401, 'Not authorized, token failed'));
     }
   }
 
   if (!token) {
-    throw new ApiError(401, 'Not authorized, no token');
+    next(new ApiError(401, 'Not authorized, no token'));
   }
-});
+};
 
 module.exports = { protect };

@@ -44,17 +44,23 @@ const createProduct = asyncHandler(async (req, res) => {
 // GET /api/products
 const getProducts = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 9;
+  const limit = parseInt(req.query.limit) || 8;
   const search = req.query.search || '';
+  const sort = req.query.sort || 'default';
   const skip = (page - 1) * limit;
 
   const query = search
     ? { name: { $regex: search, $options: 'i' } }
     : {};
 
+  let sortQuery = { createdAt: -1 };
+  if (sort === 'price-asc') sortQuery = { price: 1 };
+  if (sort === 'price-desc') sortQuery = { price: -1 };
+  if (sort === 'discount') sortQuery = { discount: -1 };
+
   const total = await Product.countDocuments(query);
   const products = await Product.find(query)
-    .sort({ createdAt: -1 })
+    .sort(sortQuery)
     .skip(skip)
     .limit(limit);
 
