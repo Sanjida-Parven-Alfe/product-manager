@@ -143,8 +143,8 @@ const LandingPage = () => {
                 <div className="w-3 h-3 rounded-full bg-slate-200" />
               </div>
             </div>
-            <div className="p-6 bg-slate-50 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="col-span-2 grid grid-cols-2 gap-4">
+            <div className="p-4 sm:p-6 bg-slate-50 grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   {
                     name: "Wireless Headphones",
@@ -165,20 +165,20 @@ const LandingPage = () => {
                 ].map((p, i) => (
                   <div
                     key={i}
-                    className="bg-white border border-slate-100 rounded-xl p-4 flex gap-4 items-center shadow-sm"
+                    className="bg-white border border-slate-100 rounded-xl p-3 sm:p-4 flex gap-3 sm:gap-4 items-center shadow-sm"
                   >
-                    <div className="w-12 h-12 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                      <Package size={20} className="text-indigo-400" />
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                      <Package size={18} className="text-indigo-400" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-800">
+                    <div className="min-w-0">
+                      <h4 className="text-xs sm:text-sm font-bold text-slate-800 truncate">
                         {p.name}
                       </h4>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-sm font-semibold text-emerald-600">
+                        <span className="text-xs sm:text-sm font-semibold text-emerald-600">
                           {p.price}
                         </span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">
+                        <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full shrink-0">
                           {p.stock}
                         </span>
                       </div>
@@ -187,12 +187,12 @@ const LandingPage = () => {
                 ))}
               </div>
               <div className="space-y-4">
-                <div className="bg-indigo-600 rounded-2xl p-6 text-white shadow-lg shadow-indigo-600/20">
-                  <h4 className="text-indigo-200 text-sm font-medium mb-1">
+                <div className="bg-indigo-600 rounded-2xl p-5 sm:p-6 text-white shadow-lg shadow-indigo-600/20">
+                  <h4 className="text-indigo-200 text-xs sm:text-sm font-medium mb-1">
                     Total Revenue
                   </h4>
-                  <div className="text-3xl font-black mb-4">$24,890.00</div>
-                  <div className="h-20 bg-white/10 rounded-lg flex items-end p-2 gap-2">
+                  <div className="text-2xl sm:text-3xl font-black mb-4">$24,890.00</div>
+                  <div className="h-16 sm:h-20 bg-white/10 rounded-lg flex items-end p-2 gap-1.5 sm:gap-2">
                     {[40, 70, 45, 90, 65, 100].map((h, i) => (
                       <div
                         key={i}
@@ -202,11 +202,11 @@ const LandingPage = () => {
                     ))}
                   </div>
                 </div>
-                <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm">
-                  <h4 className="text-slate-500 text-sm font-medium mb-1">
+                <div className="bg-white border border-slate-100 rounded-2xl p-4 sm:p-5 shadow-sm">
+                  <h4 className="text-slate-500 text-xs sm:text-sm font-medium mb-1">
                     Active Products
                   </h4>
-                  <div className="text-2xl font-bold text-slate-800">1,482</div>
+                  <div className="text-xl sm:text-2xl font-bold text-slate-800">1,482</div>
                 </div>
               </div>
             </div>

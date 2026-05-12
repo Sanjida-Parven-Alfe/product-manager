@@ -26,6 +26,7 @@ const DashboardPage = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const handleEdit = (product) => {
     setEditProduct(product);
@@ -91,40 +92,51 @@ const DashboardPage = () => {
         }
       `}</style>
 
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[55] lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* SideNavBar */}
-      <aside className="fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200/60 bg-white/80 backdrop-blur-xl z-50 flex flex-col p-6 gap-2">
-        <div className="mb-10 px-2">
-          <div className="flex items-center gap-3 mb-1">
-             <Link to="/" className="flex items-center gap-2 cursor-pointer">
-                <img
-                  src={logoJpg}
-                  alt="Shelve Icon"
-                  className="h-8 object-contain"
-                />
-                <img
-                  src={logo}
-                  alt="Shelve Logo"
-                  className="h-10 object-contain"
-                />
-             </Link>
-          </div>
-          <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] pl-1">Enterprise Catalog</p>
+      <aside className={`fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200/60 bg-white z-[60] flex flex-col p-6 gap-2 transition-transform duration-300 lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="mb-10 px-2 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2 cursor-pointer">
+            <img
+              src={logoJpg}
+              alt="Shelve Icon"
+              className="h-8 object-contain"
+            />
+            <img
+              src={logo}
+              alt="Shelve Logo"
+              className="h-10 object-contain"
+            />
+          </Link>
+          <button 
+            onClick={() => setIsSidebarOpen(false)}
+            className="lg:hidden p-2 text-slate-400"
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
 
         <nav className="flex flex-col gap-1.5 grow">
-          <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3.5 bg-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100 transition-all hover:bg-indigo-100/50">
+          <Link to="/dashboard" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 px-4 py-3.5 bg-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100 transition-all">
             <span className="material-symbols-outlined">dashboard</span>
             <span className="font-bold">Dashboard</span>
           </Link>
-          <Link to="/products" className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
+          <Link to="/products" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
             <span className="material-symbols-outlined">inventory_2</span>
             <span className="font-semibold">All Products</span>
           </Link>
-          <Link to="/features" className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
+          <Link to="/features" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
             <span className="material-symbols-outlined">auto_awesome</span>
             <span className="font-semibold">Features</span>
           </Link>
-          <Link to="/about" className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
+          <Link to="/about" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 px-4 py-3.5 text-slate-500 hover:text-indigo-600 hover:bg-slate-50 rounded-2xl transition-all">
             <span className="material-symbols-outlined">info</span>
             <span className="font-semibold">About Us</span>
           </Link>
@@ -136,7 +148,7 @@ const DashboardPage = () => {
         </nav>
 
         <button 
-          onClick={() => setShowForm(true)}
+          onClick={() => { setShowForm(true); setIsSidebarOpen(false); }}
           className="mb-4 py-4 px-6 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold shadow-lg shadow-indigo-500/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
         >
           <span className="material-symbols-outlined text-xl">add</span>
@@ -145,12 +157,18 @@ const DashboardPage = () => {
       </aside>
 
       {/* Main Content Area */}
-      <main className="ml-[280px] min-h-screen flex flex-col relative">
+      <main className="lg:ml-[280px] min-h-screen flex flex-col relative">
         {/* TopNavBar */}
         <header className="sticky top-0 w-full z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
-          <div className="flex justify-between items-center h-20 px-10 max-w-7xl mx-auto w-full">
-            <div className="flex items-center gap-6 flex-1">
-              <div className="relative w-full max-w-md group">
+          <div className="flex justify-between items-center h-20 px-6 lg:px-10 max-w-7xl mx-auto w-full">
+            <div className="flex items-center gap-4 lg:gap-6 flex-1">
+              <button 
+                onClick={() => setIsSidebarOpen(true)}
+                className="lg:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-xl"
+              >
+                <span className="material-symbols-outlined">menu</span>
+              </button>
+              <div className="relative w-full max-w-md group hidden sm:block">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors">search</span>
                 <input 
                   type="text"
@@ -162,16 +180,16 @@ const DashboardPage = () => {
               </div>
             </div>
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 lg:gap-6">
               <button className="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-slate-50 rounded-xl transition-all relative">
                 <span className="material-symbols-outlined">notifications</span>
                 <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-indigo-500 rounded-full border-2 border-white"></span>
               </button>
               
-              <div className="h-8 w-px bg-slate-200"></div>
+              <div className="h-8 w-px bg-slate-200 hidden sm:block"></div>
               
               <div className="flex items-center gap-3">
-                <div className="text-right hidden sm:block">
+                <div className="text-right hidden md:block">
                   <p className="text-sm font-bold text-slate-900 leading-tight">{user?.name}</p>
                   <p className="text-[10px] text-indigo-600 uppercase tracking-widest font-black">Manager</p>
                 </div>
@@ -184,7 +202,7 @@ const DashboardPage = () => {
         </header>
 
         {/* Dashboard Canvas */}
-        <div className="p-10 max-w-7xl mx-auto w-full space-y-10">
+        <div className="p-6 lg:p-10 max-w-7xl mx-auto w-full space-y-10">
           {/* Toolbar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
