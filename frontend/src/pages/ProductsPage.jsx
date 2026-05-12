@@ -49,7 +49,7 @@ const ProductsPage = () => {
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2 text-slate-600 font-semibold">
               <LayoutGrid size={18} className="text-indigo-600" />
-              <span>{pagination.total} Products Available</span>
+              <span>{pagination?.total || 0} Products Available</span>
             </div>
           </div>
 
@@ -89,8 +89,8 @@ const ProductsPage = () => {
 
               <div className="mt-16">
                 <Pagination
-                  currentPage={pagination.page}
-                  totalPages={pagination.pages}
+                  currentPage={pagination?.page || 1}
+                  totalPages={pagination?.pages || 1}
                   onPageChange={handlePageChange}
                 />
               </div>

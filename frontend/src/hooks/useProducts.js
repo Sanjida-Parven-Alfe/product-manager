@@ -20,10 +20,11 @@ const useProducts = () => {
       const { data } = await api.get('/products', {
         params: { page, limit: 8, search: searchQuery, sort: sortQuery },
       });
-      setProducts(data.data);
-      setPagination(data.pagination);
+      setProducts(data.data || []);
+      setPagination(data.pagination || { page: 1, pages: 1, total: 0 });
     } catch (error) {
       showError(error.response?.data?.message || 'Failed to fetch products');
+      setProducts([]);
     } finally {
       setLoading(false);
     }
