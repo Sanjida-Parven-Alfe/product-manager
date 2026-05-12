@@ -93,7 +93,7 @@ const ProductForm = ({ onSubmit, onClose, initialData = null, loading }) => {
             required
             rows={3}
             placeholder="Describe your product catalog entry..."
-            className="w-full bg-[#0f0d13] border border-white/5 rounded-2xl px-5 py-4 text-white placeholder:text-slate-700 text-sm focus:outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/5 transition-all duration-200 resize-none"
+            className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-5 py-4 text-slate-900 placeholder:text-slate-400 text-sm focus:outline-none focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/5 transition-all duration-200 resize-none outline-none"
           />
         </div>
 
@@ -102,15 +102,15 @@ const ProductForm = ({ onSubmit, onClose, initialData = null, loading }) => {
             Product Image
           </label>
           <label className="cursor-pointer block group">
-            <div className={`border-2 border-dashed rounded-[2rem] p-8 transition-all duration-300 flex flex-col items-center justify-center gap-3 ${imagePreview ? 'border-indigo-500/30 bg-indigo-500/5' : 'border-white/5 hover:border-indigo-500/30 bg-[#0f0d13] hover:bg-indigo-500/5'}`}>
+            <div className={`border-2 border-dashed rounded-[2rem] p-8 transition-all duration-300 flex flex-col items-center justify-center gap-3 ${imagePreview ? 'border-indigo-500/30 bg-indigo-50/50' : 'border-slate-200 hover:border-indigo-400 bg-slate-50 hover:bg-white'}`}>
               {imagePreview ? (
-                <div className="relative w-full rounded-2xl overflow-hidden group-hover:opacity-90 transition-opacity">
+                <div className="relative w-full rounded-2xl overflow-hidden group-hover:opacity-90 transition-opacity shadow-sm">
                   <img
                     src={imagePreview}
                     alt="Preview"
                     className="w-full h-56 object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <div className="absolute inset-0 bg-indigo-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <p className="text-white font-bold text-sm flex items-center gap-2">
                       <Upload size={18} /> Change Image
                     </p>
@@ -118,14 +118,14 @@ const ProductForm = ({ onSubmit, onClose, initialData = null, loading }) => {
                 </div>
               ) : (
                 <>
-                  <div className="w-16 h-16 bg-indigo-500/10 text-indigo-400 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <div className="w-16 h-16 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm border border-indigo-100">
                     <ImageIcon size={32} />
                   </div>
                   <div className="text-center mt-2">
-                    <span className="text-indigo-400 font-bold text-sm">Click to upload</span>
-                    <span className="text-slate-600 text-sm"> or drag and drop</span>
+                    <span className="text-indigo-600 font-bold text-sm">Click to upload</span>
+                    <span className="text-slate-500 text-sm font-medium"> or drag and drop</span>
                   </div>
-                  <span className="text-slate-700 text-xs font-medium uppercase tracking-widest mt-1">JPG, PNG, WEBP — max 5MB</span>
+                  <span className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">JPG, PNG, WEBP — max 5MB</span>
                 </>
               )}
             </div>
