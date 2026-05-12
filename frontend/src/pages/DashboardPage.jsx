@@ -290,6 +290,7 @@ const DashboardPage = () => {
               currentPage={pagination.page}
               totalPages={pagination.pages}
               onPageChange={handlePageChange}
+              variant="dark"
             />
           </footer>
         </div>
